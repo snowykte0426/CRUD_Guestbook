@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
-
     <th:block th:fragment="content">
-
         <h1 class="mt-4">GuestBook List Page
             <span>
                 <a th:href="@{/guestbook/register}">
@@ -12,8 +9,6 @@
                 </a>
             </span>
         </h1>
-
-        <!-- Guestbook List -->
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -36,8 +31,6 @@
                 </tr>
             </tbody>
         </table>
-
-        <!-- Page List -->
         <ul class="pagination h-100 justify-content-center align-items-center">
 
             <li class="page-item" th:if="${pageResponseDTO.prev}">
@@ -50,8 +43,6 @@
                 <a class="page-link" th:href="@{/guestbook/list(page = ${pageResponseDTO.end + 1})}">Next</a>
             </li>
         </ul>
-
-        <!-- Modal -->
         <button type="button" id="modalButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" hidden></button>
         <div class="modal" tabindex="-1" role="dialog" id="myModal">
             <div class="modal-dialog" role="document">
@@ -71,19 +62,13 @@
                 </div>
             </div>
         </div>
-
         <script th:inline="javascript">
-        
             const msg = [[${msg}]];
-
             console.log(msg);
-
             if(msg) {
                 const modalButton = document.getElementById("modalButton");
                 modalButton.click()
             }
         </script>
-
     </th:block>
-
 </th:block>

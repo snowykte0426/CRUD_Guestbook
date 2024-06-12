@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+  <th:block th:fragment="content">
+    <h1 class="mt-4">Information</h1>
+    <div class="container mt-4">
+      <h2>Developer Information</h2>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Role</th>
+          <th scope="col">Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>김태은</td>
+          <td>Backend Developer</td>
+          <td>snowykte0426@naver.com</td>
+        </tr>
+        </tbody>
+      </table>
+      <h2>System Status</h2>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">Component</th>
+          <th scope="col">Status</th>
+          <th scope="col">Last Checked</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>Server</td>
+          <td>Online</td>
+          <td id="currentDateTimeServer"></td>
+        </tr>
+        <tr>
+          <td>Database</td>
+          <td>Online</td>
+          <td id="currentDateTimeDatabase"></td>
+        </tr>
+        <tr>
+          <td>API Gateway</td>
+          <td>Online</td>
+          <td id="currentDateTimeApiGateway"></td>
+        </tr>
+        </tbody>
+      </table>
+      <h2>Recent Logs</h2>
+      <div class="alert alert-info" role="alert">
+        No recent errors or warnings.
+      </div>
+    </div>
+    <script>
+      function updateDateTime() {
+        const now = new Date();
+        const formattedDateTime = now.toISOString().slice(0, 19).replace('T', ' ');
+        document.getElementById('currentDateTimeServer').textContent = formattedDateTime;
+        document.getElementById('currentDateTimeDatabase').textContent = formattedDateTime;
+        document.getElementById('currentDateTimeApiGateway').textContent = formattedDateTime;
+      }
+      setInterval(updateDateTime, 1000);
+      updateDateTime();
+    </script>
+  </th:block>
+</th:block>
+</html>

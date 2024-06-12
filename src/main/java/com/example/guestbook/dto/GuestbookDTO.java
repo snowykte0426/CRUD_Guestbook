@@ -1,7 +1,6 @@
 package com.example.guestbook.dto;
 
 import java.time.LocalDateTime;
-
 import lombok.*;
 
 @Data
@@ -9,7 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GuestbookDTO {
-    
     private Long gno;
     private String title;
     private String content;
