@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+
+    <th:block th:fragment="content">
+
+        <h1 class="mt-4">GuestBook Update Page</h1>
+
+            <form action="/guestbook/update" method="post" id="updateForm">
+
+                <!-- post 요청이기 때문에 page 정보를 form 데이터로 넘겨줘야 함 -->
+                <input type="hidden" name="page" th:value="${pageRequestDTO.page}">
+
+                <div class="form-group">
+                    <label>Gno</label>
+                    <input type="text" class="form-control" name="gno" th:value="${guestbookDTO.gno}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" class="form-control" name="title" th:value="${guestbookDTO.title}" >
+                </div>
+
+                <div class="form-group">
+                    <label>Content</label>
+                    <textarea class="form-control" name="content" rows="5" >[[${guestbookDTO.content}]]</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Writer</label>
+                    <input type="text" class="form-control" name="writer" th:value="${guestbookDTO.writer}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>RegDate</label>
+                    <input type="text" class="form-control" th:value="${#temporals.format(guestbookDTO.regDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>ModDate</label>
+                    <input type="text" class="form-control" th:value="${#temporals.format(guestbookDTO.modDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
+                </div>
+
+            </form>
+            <br>
+
+            <button type="button" class="btn btn-info" id="cancleBtn">Cancle</button>
+            <button type="button" class="btn btn-primary" id="updateBtn">Update</button>
+
+            <script th:inline="javascript">
+                const form = document.getElementById("updateForm");
+
+                const cancleBtn = document.getElementById("cancleBtn");
+                const updateBtn = document.getElementById("updateBtn");
+
+                cancleBtn.addEventListener("click", () => {
+
+                    while (form.firstChild) { 
+                        form.removeChild(form.firstChild);
+                    }
+
+                    const gnoInput = document.createElement('input');
+                    gnoInput.type = "text";
+                    gnoInput.name = "gno";
+                    gnoInput.value = [[${guestbookDTO.gno}]];
+
+                    const pageInput = document.createElement('input');
+                    pageInput.type = "text";
+                    pageInput.name = "page";
+                    pageInput.value = [[${pageRequestDTO.page}]]
+
+                    form.insertAdjacentElement('afterbegin', gnoInput);
+                    form.insertAdjacentElement('afterbegin', pageInput);
+                    form.setAttribute("action", "/guestbook/read");
+                    form.setAttribute("method", "get");
+                    form.submit();
+                })
+
+                updateBtn.addEventListener("click", () => {
+
+                    if(!confirm("수정하시겠습니까?")) {
+                        return ;
+                    }
+
+                    form.setAttribute("action", "/guestbook/update");
+                    form.setAttribute("method", "post");
+                    form.submit();
+                })
+
+            </script>
+
+    </th:block>
+
+</th:block>
